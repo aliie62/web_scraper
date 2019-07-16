@@ -1,5 +1,5 @@
 # About the project
-This module is a web scarper developed for [The Guardian](https://www.theguardian.com/au) website. It comes with a supplementary module to write found news in a MongoDB databse.
+This module is a web scarper developed for [The Guardian](https://www.theguardian.com/au) website. It's come with a supplementary module to write found news in a MongoDB database.
 
 ## Built With
 Python 3.6 was used to develop this module. Other than built-in modules, a few other modules/packages has been used which are decribed at [Prerequisites](##Prerequisites). 
