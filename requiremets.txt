@@ -1,0 +1,4 @@
+bs4==0.0.1
+pymongo==4.1.0
+requests==2.27.1
+dnspython==2.2.1

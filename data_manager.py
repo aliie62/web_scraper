@@ -1,18 +1,23 @@
+from sqlite3 import DatabaseError
 from pymongo import MongoClient
-import ssl
-import datetime
-import re
+import os
 
-def __connect():
-    username = 'USER MONGODB USERNAME'
-    password = 'YOUR MONGODB PASSWORD'
-    #instead of 127.0.0.1 in below, enter your MongoDB URI
-    client = MongoClient('mongodb://%s:%s@127.0.0.1' % (username,password),ssl_cert_reqs=ssl.CERT_NONE)
-    return client
+username = os.environ.get('MONGO_USERNAME')
+password = os.environ.get('MONGO_PASSWORD')
+mongo_uri = os.environ.get('MONGO_URI')
+mongo_db = os.environ.get('MONGO_DB')
+mongo_collection = os.environ.get('MONGO_COLLECTION')
+
 
 def bulk_insert(documents):
-    client = __connect()
-    db = client['YOUR DB NAME']
-    collection = db['YOUR COLLECTION NAME']  
-    result = collection.insert_many(documents)
-    return result.inserted_ids
+    try:
+        client = MongoClient(f"mongodb+srv://{username}:{password}@{mongo_uri}?retryWrites=true&w=majority")
+    except:
+        raise ConnectionError('Error in connecting to MongoDB server.')
+    
+    try:
+        db = client[mongo_db]
+        collection = db[mongo_collection]  
+        collection.insert_many(documents)
+    except:
+        raise DatabaseError('Error in saving data in database.')
